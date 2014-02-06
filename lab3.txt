@@ -1,0 +1,45 @@
+--Justin Esposito - lab 3 - 2/6/14
+
+--q1
+SELECT agents.name, agents.city
+FROM agents
+WHERE agents.name = 'Smith'
+
+--q2
+SELECT products.pid, products.name, products.quantity
+FROM products
+where products.priceUSD > 1.25
+
+--q3
+SELECT orders.ordno, orders.aid
+FROM orders
+
+--q4
+SELECT customers.name, customers.city
+FROM customers
+where customers.city = 'Dallas'
+
+--q5
+SELECT agents.name
+FROM agents
+WHERE (agents.city != 'New York') AND (agents.city != 'Newark')
+
+--q6
+SELECT products.*
+FROM products
+WHERE (products.city != 'New York') AND (products.city != 'Newark') AND (products.priceUSD > 1.00)
+
+--q7
+SELECT orders.*
+FROM orders
+WHERE (orders.mon = 'jan') OR (orders.mon = 'mar')
+
+--q8
+SELECT orders.*
+FROM orders
+WHERE (orders.mon = 'feb') AND (orders.dollars < 100.00)
+
+--q9
+SELECT orders.*
+FROM orders
+WHERE orders.cid = 'c001'
