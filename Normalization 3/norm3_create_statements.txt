@@ -1,0 +1,81 @@
+DROP TABLE IF EXISTS People;
+CREATE TABLE People(
+	PID char(4) NOT NULL PRIMARY KEY,
+	fName text NOT NULL,
+	lName text NOT NULL,
+	Age int NOT NULL
+);
+
+DROP TABLE IF EXISTS Engineers;
+CREATE TABLE Engineers(
+	PID char(4) NOT NULL PRIMARY KEY REFERENCES People(PID),
+	highestDegree text NOT NULL,
+	favVideoGame text NOT NULL
+);
+
+DROP TABLE IF EXISTS Flight_Control_Operators;
+CREATE TABLE Flight_Control_Operators(
+	PID char(4) NOT NULL PRIMARY KEY REFERENCES People(PID),
+	chairPreferred text NOT NULL,
+	drinkPreferred text NOT NULL
+);
+
+DROP TABLE IF EXISTS Astronauts;
+CREATE TABLE Astronauts(
+	PID char(4) NOT NULL PRIMARY KEY REFERENCES People(PID),
+	yearsFlying int NOT NULL,
+	golfHandicap text NOT NULL
+);
+
+DROP TABLE IF EXISTS Spacecraft;
+CREATE TABLE Spacecraft(
+	tailNum text NOT NULL PRIMARY KEY,
+	name text NOT NULL,
+	weight_tons float NOT NULL,
+	fuelType text NOT NULL,
+	capacity int NOT NULL
+);
+
+DROP TABLE IF EXISTS Crew;
+CREATE TABLE Crew(
+	PID char(4) NOT NULL,
+	tailNum text NOT NULL,
+	PRIMARY KEY (PID,tailNum),
+	FOREIGN KEY (PID) REFERENCES People(PID),
+	FOREIGN KEY (tailNum) REFERENCES Spacecraft(tailNum)
+);
+
+DROP TABLE IF EXISTS Systems;
+CREATE TABLE Systems(
+	sysID char(4) NOT NULL PRIMARY KEY,
+	tailNum text NOT NULL,
+	name text NOT NULL,
+	description text NOT NULL,
+	FOREIGN KEY (tailNum) REFERENCES Spacecraft(tailNum)
+);
+
+DROP TABLE IF EXISTS Parts;
+CREATE TABLE Parts(
+	partNo int NOT NULL PRIMARY KEY,
+	sysID char(4) NOT NULL,
+	name text NOT NULL,
+	description text NOT NULL,
+	FOREIGN KEY (sysID) REFERENCES Systems(sysID)
+);
+
+DROP TABLE IF EXISTS Suppliers;
+CREATE TABLE Suppliers(
+	supID char (4) NOT NULL PRIMARY KEY,
+	name text NOT NULL,
+	address text NOT NULL,
+	paymentTerms text NOT NULL
+);
+
+DROP TABLE IF EXISTS CATALOG;
+CREATE TABLE Catalog(
+	supID char(4) NOT NULL,
+	partNo int NOT NULL,
+	PRIMARY KEY (supID,partNo),
+	FOREIGN KEY (supID) REFERENCES Suppliers(supID),
+	FOREIGN KEY (partNo) REFERENCES Parts(partNo)
+);
