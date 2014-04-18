@@ -1,0 +1,27 @@
+-- Justin Esposito Lab 10
+
+CREATE OR REPLACE FUNCTION prereqsfor(integer, REFCURSOR) returns refcursor as
+$$
+declare coursenum int		:=$1;
+	resultset REFCURSOR  	:=$2;
+begin
+	open resultset for
+		select prerequisites.prereqnum from prerequisites
+		where $1 = prerequisites.coursenum;
+	return resultset;
+end;
+$$ 
+language plpgsql;
+
+CREATE OR REPLACE FUNCTION IsPreReqFor(integer, REFCURSOR) returns refcursor as 
+$$
+declare prereqnum int		:=$1;
+	resultset REFCURSOR	:=$2;
+begin
+	open resultset for
+		select prerequisites.coursenum from prerequisites
+		where $1 = prerequisites.prereqnum;
+	return resultset;
+end;
+$$
+language plpgsql;
